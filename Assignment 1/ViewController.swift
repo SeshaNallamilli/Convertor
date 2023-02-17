@@ -27,6 +27,7 @@ class ViewController: UIViewController {
         decimal.text = ""
         octal.text = ""
         hexaDecimal.text = ""
+        Input.text = ""
     }
     
     
