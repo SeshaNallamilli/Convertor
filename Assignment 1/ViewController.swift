@@ -34,11 +34,13 @@ class ViewController: UIViewController {
     @IBAction func Convert(_ sender: Any) {
         let typeIndex = inputType.selectedSegmentIndex
         let val = Int(Input.text ?? "0") ?? 0
+        let val1: String? = Input.text
+        let val2: String = val1!
         switch(typeIndex) {
             case 0 : decimalToAll(value: val)
             case 1 : binaryToAll(value: val)
             case 2 : octalToAll(value:val)
-            case 3 : hexaToAll(value:val)
+            case 3 : hexaToAll(value:val2)
             default: return
         
         }
@@ -181,11 +183,74 @@ class ViewController: UIViewController {
                     hexaDecimal.text=hex
         }
         
-        func hexaToAll(value:Int) {
+        func hexaToAll(value: String) {
+            let hexVal = value.capitalized
+                    hexaDecimal.text=String(hexVal)
+                    let len = hexVal.count
+                    
+                    // Initializing base value to 1, i.e 16^0
+                    var base = 1
+                    
+                    var dec_val = 0
+                    
+                    // Extracting characters as digits from last character
+                    for i in (0..<len).reversed() {
+                        let char = hexVal[hexVal.index(hexVal.startIndex, offsetBy: i)]
+                        // if character lies in '0'-'9', converting it to integral 0-9 by subtracting 48 from ASCII value
+                        if char >= "0" && char <= "9" {
+                            dec_val += (Int(char.asciiValue!) - 48) * base
+                            
+                            // incrementing base by power
+                            base = base * 16
+                        }
+                        // if character lies in 'A'-'F' , converting it to integral 10 - 15 by subtracting 55 from ASCII value
+                        else if char >= "A" && char <= "F" {
+                            dec_val += (Int(char.asciiValue!) - 55) * base
+                            
+                            // incrementing base by power
+                            base = base * 16
+                        }
+                    }
+                    decimal.text = String(dec_val)
+                    var decimalValue = dec_val
+                    var octalNumber = 0
+                    var count = 1
+                    
+                    while(dec_val != 0) {
+                        
+                        let rem = dec_val % 8
+                        
+                        octalNumber += rem * count
+                        
+                        count = count * 10
+                        dec_val /= 8
+                        
+                    }
+                    
+                    octal.text = String(octalNumber)
+                    var binaryValue = ""
+                    while(decimalValue > 0) {
+                        
+                        if ((decimalValue & 1) == 1){
+                            
+                            binaryValue += "1"
+                        }
+                        else {
+                            
+                            binaryValue += "0"
+                        }
+                        
+                        decimalValue >>= 1
+                    }
+                    
+                    let res = String(binaryValue.reversed())
+                    
+                    binary.text = String(res)
+                }
             
         }
     }
     
-}
+
 
 
