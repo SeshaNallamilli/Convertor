@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Assignment 1
 //
-//  Created by Nallamilli Sesha kumar reddy on 2/4/23.
+//  Created by Sesha Kumar Reddy Nallamilli on 2/4/23.
 //
 
 import UIKit
@@ -30,222 +30,239 @@ class ViewController: UIViewController {
         Input.text = ""
     }
     
+    @IBAction func act(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex{
+        case 0:
+            Input.text = ""
+            Input.placeholder = "Enter Decimal Number"
+        case 1:
+            Input.text = ""
+            Input.placeholder = "Enter Binary Number"
+        case 2:
+            Input.text = ""
+            Input.placeholder = "Enter Octal Number"
+        case 3:
+            Input.text = ""
+            Input.placeholder = "Enter Hexadecimal Number"
+        default:
+            Input.text = ""
+            Input.placeholder = "Enter Decimal Number"
+        }
+    }
     
     @IBAction func Convert(_ sender: Any) {
         let typeIndex = inputType.selectedSegmentIndex
         let val = Int(Input.text ?? "0") ?? 0
         let val1: String? = Input.text
         let val2: String = val1!
+        
         switch(typeIndex) {
-            case 0 : decimalToAll(value: val)
-            case 1 : binaryToAll(value: val)
-            case 2 : octalToAll(value:val)
-            case 3 : hexaToAll(value:val2)
+            case 0 : decimalConvert(value: val)
+            case 1 : binaryConvert(value: val)
+            case 2 : octalConvert(value:val)
+            case 3 : hexaConvert(value:val2)
             default: return
         
         }
         
-        func decimalToAll(value:Int) {
-            var number = value
+        func decimalConvert(value:Int) {
+            var digit = value
             decimal.text = String(value)
             var octalNumber = 0
             var count = 1
-            while(number != 0) {
-               let rem = number % 8
+            while(digit != 0) {
+               let rem = digit % 8
                octalNumber += rem * count
                count = count * 10
-               number /= 8
+               digit /= 8
             }
             octal.text = String(octalNumber)
     
-            var decimalValue = value
+            var digit1 = value
             var binaryValue = ""
-            while(decimalValue > 0) {
-               if ((decimalValue & 1) == 1){
+            while(digit1 > 0) {
+               if ((digit1 & 1) == 1){
                   binaryValue += "1"
                }
                else {
                   binaryValue += "0"
                }
                
-               decimalValue >>= 1
+               digit1 >>= 1
             }
 
             let res = String(binaryValue.reversed())
             
             binary.text = String(res)
             
-            var decimal = value
-                    var rem: Int
-                    var hex = ""
-                    let hexchars: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
-                    while decimal > 0 {
-                        rem = decimal % 16
-                        hex = String(hexchars[rem]) + hex
-                        decimal /= 16
+            var digit2 = value
+                    var remainder: Int
+                    var hexadigit = ""
+                    let hexcharacters: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+                    while digit2 > 0 {
+                        remainder = digit2 % 16
+                        hexadigit = String(hexcharacters[remainder]) + hexadigit
+                        digit2 /= 16
                     }
-                    hexaDecimal.text=hex
+                    hexaDecimal.text=hexadigit
         }
         
-        func binaryToAll(value:Int) {
-            var number = value
-            var decimalNum = 0
-            var baseVal = 1
+        func binaryConvert(value:Int) {
+            var digit3 = value
+            var decimaldigit = 0
+            var foot = 1
             binary.text=String(value)
-            while(number > 0){
-               let endVal = number % 10
-               number /= 10
-               decimalNum += endVal * baseVal
-               baseVal *= 2
+            while(digit3 > 0){
+               let last = digit3 % 10
+               digit3 /= 10
+               decimaldigit += last * foot
+               foot *= 2
             }
-            decimal.text = String(decimalNum)
+            decimal.text = String(decimaldigit)
             
-            var decimal = decimalNum
-                   var octalNumber = 0
+            var decimal = decimaldigit
+                   var octaldigit = 0
                    var count = 1
                    
-                   while(decimalNum != 0) {
+                   while(decimaldigit != 0) {
                        
-                       let rem = decimalNum % 8
+                       let remainder = decimaldigit % 8
                        
-                       octalNumber += rem * count
+                       octaldigit += remainder * count
                        
                        count = count * 10
-                       decimalNum /= 8
+                       decimaldigit /= 8
                        
                    }
                    
-                   octal.text = String(octalNumber)
-                   var rem: Int
-                   var hex = ""
-                   let hexchars: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+                   octal.text = String(octaldigit)
+                   var remainder: Int
+                   var hexdigit = ""
+                   let hexcharacters: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
                    while decimal > 0 {
-                       rem = decimal % 16
-                       hex = String(hexchars[rem]) + hex
+                       remainder = decimal % 16
+                       hexdigit = String(hexcharacters[remainder]) + hexdigit
                        decimal /= 16
                    }
-                   hexaDecimal.text=hex
+                   hexaDecimal.text=hexdigit
         }
         
-        func octalToAll(value:Int) {
+        func octalConvert(value:Int) {
             octal.text = String(value)
-                    let a: Int = value
+                    let val3: Int = value
                     
-                    // Initialize result variable to 0.
-                    var result: Int = 0
                     
-                    // Take a copy of input
-                    var copy_a: Int = a
+                    var output: Int = 0
                     
-                    var i: Int = 0
-                    while copy_a > 0 {
-                        // Take the last digit
-                        let temp: Int = copy_a % 10
+                    
+                    var val4: Int = val3
+                    
+                    var s: Int = 0
+                    while val4 > 0 {
+                      
+                        let t: Int = val4 % 10
                         
-                        // Appropriate power on 8 suitable to its position.
-                        let p: Double = pow(8, Double(i))
+                      
+                        let power: Double = pow(8, Double(s))
                         
-                        // Multiply the digits to the into the Input and then add it to result
-                        result += Int(Double(temp) * p)
-                        copy_a /= 10
+                       
+                        output += Int(Double(t) * power)
+                        val4 /= 10
                         
-                        i += 1
+                        s += 1
                     }
-                    decimal.text = String(result)
-                    var decimalValue = result
-                    var binaryValue = ""
-                    while(decimalValue > 0) {
+                    decimal.text = String(output)
+                    var decimaldigit1 = output
+                    var binarydigit1 = ""
+                    while(decimaldigit1 > 0) {
                         
-                        if ((decimalValue & 1) == 1){
+                        if ((decimaldigit1 & 1) == 1){
                             
-                            binaryValue += "1"
+                            binarydigit1 += "1"
                         }
                         else {
                             
-                            binaryValue += "0"
+                            binarydigit1 += "0"
                         }
                         
-                        decimalValue >>= 1
+                        decimaldigit1 >>= 1
                     }
                     
-                    let res = String(binaryValue.reversed())
+                    let resultant = String(binarydigit1.reversed())
                     
-                    binary.text = String(res)
-                    var decimal = result
-                    var rem: Int
-                    var hex = ""
-                    let hexchars: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
-                    while decimal > 0 {
-                        rem = decimal % 16
-                        hex = String(hexchars[rem]) + hex
-                        decimal /= 16
+                    binary.text = String(resultant)
+                    var decimalnum = output
+                    var remainder: Int
+                    var hexdigit = ""
+                    let hexcharacters: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+                    while decimalnum > 0 {
+                        remainder = decimalnum % 16
+                        hexdigit = String(hexcharacters[remainder]) + hexdigit
+                        decimalnum /= 16
                     }
-                    hexaDecimal.text=hex
+                    hexaDecimal.text=hexdigit
         }
         
-        func hexaToAll(value: String) {
-            let hexVal = value.capitalized
-                    hexaDecimal.text=String(hexVal)
-                    let len = hexVal.count
+        func hexaConvert(value: String) {
+            let hexnum = value.capitalized
+                    hexaDecimal.text=String(hexnum)
+                    let length = hexnum.count
                     
-                    // Initializing base value to 1, i.e 16^0
-                    var base = 1
+                    var foot = 1
                     
-                    var dec_val = 0
+                    var decimalvalue = 0
                     
-                    // Extracting characters as digits from last character
-                    for i in (0..<len).reversed() {
-                        let char = hexVal[hexVal.index(hexVal.startIndex, offsetBy: i)]
-                        // if character lies in '0'-'9', converting it to integral 0-9 by subtracting 48 from ASCII value
-                        if char >= "0" && char <= "9" {
-                            dec_val += (Int(char.asciiValue!) - 48) * base
+                    for s in (0..<length).reversed() {
+                        let character = hexnum[hexnum.index(hexnum.startIndex, offsetBy: s)]
+                       
+                        if character >= "0" && character <= "9" {
+                            decimalvalue += (Int(character.asciiValue!) - 48) * foot
                             
-                            // incrementing base by power
-                            base = base * 16
+                           
+                            foot = foot * 16
                         }
-                        // if character lies in 'A'-'F' , converting it to integral 10 - 15 by subtracting 55 from ASCII value
-                        else if char >= "A" && char <= "F" {
-                            dec_val += (Int(char.asciiValue!) - 55) * base
+                    
+                        else if character >= "A" && character <= "F" {
+                            decimalvalue += (Int(character.asciiValue!) - 55) * foot
                             
-                            // incrementing base by power
-                            base = base * 16
+                            foot = foot * 16
                         }
                     }
-                    decimal.text = String(dec_val)
-                    var decimalValue = dec_val
-                    var octalNumber = 0
-                    var count = 1
+                    decimal.text = String(decimalvalue)
+                    var decimaldigit2 = decimalvalue
+                    var octaldigit2 = 0
+                    var add = 1
                     
-                    while(dec_val != 0) {
+                    while(decimalvalue != 0) {
                         
-                        let rem = dec_val % 8
+                        let remainder = decimalvalue % 8
                         
-                        octalNumber += rem * count
+                        octaldigit2 += remainder * add
                         
-                        count = count * 10
-                        dec_val /= 8
+                        add = add * 10
+                        decimalvalue /= 8
                         
                     }
                     
-                    octal.text = String(octalNumber)
-                    var binaryValue = ""
-                    while(decimalValue > 0) {
+                    octal.text = String(octaldigit2)
+                    var binarynum = ""
+                    while(decimaldigit2 > 0) {
                         
-                        if ((decimalValue & 1) == 1){
+                        if ((decimaldigit2 & 1) == 1){
                             
-                            binaryValue += "1"
+                            binarynum += "1"
                         }
                         else {
                             
-                            binaryValue += "0"
+                            binarynum += "0"
                         }
                         
-                        decimalValue >>= 1
+                        decimaldigit2 >>= 1
                     }
                     
-                    let res = String(binaryValue.reversed())
+                    let resultant = String(binarynum.reversed())
                     
-                    binary.text = String(res)
+                    binary.text = String(resultant)
                 }
             
         }
