@@ -37,6 +37,8 @@ class ViewController: UIViewController {
         switch(typeIndex) {
             case 0 : decimalToAll(value: val)
             case 1 : binaryToAll(value: val)
+            case 2 : octalToAll(value:val)
+            case 3 : hexaToAll(value:val)
             default: return
         
         }
@@ -70,6 +72,17 @@ class ViewController: UIViewController {
             let res = String(binaryValue.reversed())
             
             binary.text = String(res)
+            
+            var decimal = value
+                    var rem: Int
+                    var hex = ""
+                    let hexchars: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+                    while decimal > 0 {
+                        rem = decimal % 16
+                        hex = String(hexchars[rem]) + hex
+                        decimal /= 16
+                    }
+                    hexaDecimal.text=hex
         }
         
         func binaryToAll(value:Int) {
@@ -84,13 +97,91 @@ class ViewController: UIViewController {
                baseVal *= 2
             }
             decimal.text = String(decimalNum)
-        }
-        
-        func octalToAll() {
             
+            var decimal = decimalNum
+                   var octalNumber = 0
+                   var count = 1
+                   
+                   while(decimalNum != 0) {
+                       
+                       let rem = decimalNum % 8
+                       
+                       octalNumber += rem * count
+                       
+                       count = count * 10
+                       decimalNum /= 8
+                       
+                   }
+                   
+                   octal.text = String(octalNumber)
+                   var rem: Int
+                   var hex = ""
+                   let hexchars: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+                   while decimal > 0 {
+                       rem = decimal % 16
+                       hex = String(hexchars[rem]) + hex
+                       decimal /= 16
+                   }
+                   hexaDecimal.text=hex
         }
         
-        func hexaToAll() {
+        func octalToAll(value:Int) {
+            octal.text = String(value)
+                    let a: Int = value
+                    
+                    // Initialize result variable to 0.
+                    var result: Int = 0
+                    
+                    // Take a copy of input
+                    var copy_a: Int = a
+                    
+                    var i: Int = 0
+                    while copy_a > 0 {
+                        // Take the last digit
+                        let temp: Int = copy_a % 10
+                        
+                        // Appropriate power on 8 suitable to its position.
+                        let p: Double = pow(8, Double(i))
+                        
+                        // Multiply the digits to the into the Input and then add it to result
+                        result += Int(Double(temp) * p)
+                        copy_a /= 10
+                        
+                        i += 1
+                    }
+                    decimal.text = String(result)
+                    var decimalValue = result
+                    var binaryValue = ""
+                    while(decimalValue > 0) {
+                        
+                        if ((decimalValue & 1) == 1){
+                            
+                            binaryValue += "1"
+                        }
+                        else {
+                            
+                            binaryValue += "0"
+                        }
+                        
+                        decimalValue >>= 1
+                    }
+                    
+                    let res = String(binaryValue.reversed())
+                    
+                    binary.text = String(res)
+                    var decimal = result
+                    var rem: Int
+                    var hex = ""
+                    let hexchars: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+                    while decimal > 0 {
+                        rem = decimal % 16
+                        hex = String(hexchars[rem]) + hex
+                        decimal /= 16
+                    }
+                    hexaDecimal.text=hex
+        }
+        
+        func hexaToAll(value:Int) {
             
         }
     }
